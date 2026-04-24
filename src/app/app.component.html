@@ -1,0 +1,45 @@
+<router-outlet></router-outlet>
+
+<!-- Carousel MDB Section -->
+<div class="carousel-container">
+  <mdb-carousel [images]="carouselImages" [indicators]="true" [controls]="true" [dark]="false"></mdb-carousel>
+</div>
+
+<!-- Cards Section Title -->
+<h2 class="section-title">Productos Destacados</h2>
+
+<!-- Cards Container con ngFor -->
+<div class="card-container">
+  <mat-card class="product-card" *ngFor="let producto of productos" (click)="verDetalle(producto.id)">
+    <mat-card-header>
+      <mat-card-title class="product-title">{{ producto.nombre }}</mat-card-title>
+      <mat-card-subtitle>SKU: {{ producto.sku }}</mat-card-subtitle>
+    </mat-card-header>
+    <mat-card-content>
+      <img [src]="producto.imagenUrl" alt="{{ producto.nombre }}" class="product-image">
+      <p class="product-price">${{ producto.precio }}</p>
+      <span class="product-shipping">{{ producto.tipoEnvio }}</span>
+    </mat-card-content>
+    <mat-card-actions>
+      <button mat-raised-button color="primary" (click)="agregarAlCarrito(producto); $event.stopPropagation()">Agregar al Carrito</button>
+    </mat-card-actions>
+  </mat-card>
+</div>
+
+<!-- Información del Producto Seleccionado - DEBAJO DE LAS CARDS -->
+<ng-container *ngIf="productoSeleccionado" [ngClass]="'producto-seleccionado-container'">
+  <div class="producto-seleccionado-wrapper">
+    <h1 [ngClass]="'producto-titulo'" 
+        [style.fontSize]="productoSeleccionado.precio > 100 ? 'x-large' : 'normal'">
+      {{ productoSeleccionado.nombre }}
+    </h1>
+    
+    <span [ngClass]="'producto-sku'">SKU: {{ productoSeleccionado.sku }}</span>
+    
+    <p [ngClass]="'producto-descripcion'" 
+       [style.fontSize]="productoSeleccionado.precio > 100 ? 'x-large' : 'normal'">
+      <strong>Precio:</strong> ${{ productoSeleccionado.precio }} | 
+      <strong>Envío:</strong> {{ productoSeleccionado.tipoEnvio }}
+    </p>
+  </div>
+</ng-container>
