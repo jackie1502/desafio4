@@ -1,63 +1,100 @@
-<div class="header">
-  <div class="header-top">
-    <span class="logo">Tienda Online</span>
-    <button class="btn-volver" (click)="volver()">← Volver</button>
+<header class="ml-header">
+  <div class="ml-top">
+    <div class="logo">mercado<br><span>libre</span></div>
+
+    <div class="search-box">
+      <input type="text" placeholder="Buscar productos, marcas y más..." />
+      <span class="material-icons">search</span>
+    </div>
+
+    <div class="envio">🚚 ¡Envío Express en menos de 2 horas!</div>
   </div>
+
+  <nav class="ml-nav">
+    <span>Categorías</span>
+    <span>Historial</span>
+    <span>Tiendas oficiales</span>
+    <span>Ofertas de la semana</span>
+    <span>Vender</span>
+    <span>Ayuda</span>
+    <span class="nav-right">Mis compras</span>
+  </nav>
+</header>
+
+<div class="sugerencias">
+  También puede interesarte: computadora - canaima - laptop canaima - audífonos
 </div>
 
 <div class="breadcrumb">
-  <span class="volver-link" (click)="volver()">← Volver al listado</span>
-  <span> | Productos › Categoría › Detalles</span>
+  <span class="volver-link" (click)="volver()">Volver al listado</span>
+  <span> | Computación › Accesorios para PC Gaming › Audífonos</span>
 </div>
 
-<div class="detalle-container" *ngIf="producto; else noEncontrado">
-  <div class="galeria">
-    <div class="main-img-wrapper">
-      <img [src]="producto.imagenUrl" [alt]="producto.nombre" class="main-img">
-    </div>
-  </div>
-
-  <div class="info-panel">
-    <p class="estado-vendidos">Nuevo | {{ producto.vendidos }} vendidos</p>
-    <h1 class="titulo">{{ producto.nombre }}</h1>
-
-    <div class="estrellas">
-      <span *ngFor="let star of getEstrellas(producto.estrellas)" class="material-icons star-icon">{{ star }}</span>
-      <span class="opiniones">({{ producto.opiniones }} opiniones)</span>
-    </div>
-
-    <div class="precio-section">
-      <p class="precio">${{ producto.precio.toFixed(2) }}</p>
-      <p class="precio-bs">SKU: {{ producto.sku }}</p>
-      <a href="#" class="ver-pago">Formas de pago</a>
-    </div>
-
-    <div class="envio-section">
-      <p class="envio-gratis">🚚 {{ producto.tipoEnvio }}</p>
-      <a href="#" class="ver-costos">Ver costos de envío</a>
-    </div>
-
-    <div class="descripcion-section">
-      <p class="desc-label">Descripción:</p>
-      <p class="desc-texto">{{ producto.descripcion }}</p>
-    </div>
-
-    <div class="cantidad-section">
-      <p class="cantidad-label">Cantidad:</p>
-      <div class="cantidad-controls">
-        <button class="qty-btn" (click)="disminuir()">−</button>
-        <span class="qty-value">{{ cantidad }}</span>
-        <button class="qty-btn" (click)="aumentar()">+</button>
-        <span class="disponibles">({{ producto.disponibles }} disponibles)</span>
+<main class="detalle-container" *ngIf="producto; else noEncontrado">
+  <section class="galeria">
+    <div class="miniaturas">
+      <div class="miniatura activa">
+        <img [src]="producto.imagenUrl" [alt]="producto.nombre">
+      </div>
+      <div class="miniatura">
+        <img [src]="producto.imagenUrl" [alt]="producto.nombre">
+      </div>
+      <div class="miniatura">
+        <img [src]="producto.imagenUrl" [alt]="producto.nombre">
       </div>
     </div>
 
-    <div class="acciones">
-      <button class="btn-comprar" (click)="comprar()">Comprar ahora</button>
-      <button class="btn-agregar">Agregar al carrito</button>
+    <div class="imagen-principal">
+      <img [src]="producto.imagenUrl" [alt]="producto.nombre">
     </div>
-  </div>
-</div>
+  </section>
+
+  <aside class="panel-compra">
+    <p class="estado">Nuevo | {{ producto.vendidos }} vendidos</p>
+
+    <div class="titulo-row">
+      <h1>{{ producto.nombre }}</h1>
+      <span class="material-icons favorito">favorite_border</span>
+    </div>
+
+    <div class="rating">
+      <span *ngFor="let star of getEstrellas(producto.estrellas)" class="material-icons star">
+        {{ star }}
+      </span>
+      <span class="opiniones">{{ producto.opiniones }} opiniones</span>
+    </div>
+
+    <div class="precio">
+      <span>US$ {{ producto.precio.toFixed(2) }}</span>
+      <span class="material-icons ayuda">help_outline</span>
+    </div>
+
+    <p class="bs">Bs. {{ (producto.precio * 36.7).toFixed(2) }}</p>
+    <p class="link">Ver los medios de pago</p>
+
+    <div class="envio-box">
+      <p class="envio-gratis">🚚 {{ producto.tipoEnvio }} a todo el país</p>
+      <p class="ubicacion">Barquisimeto, Lara</p>
+      <p class="link">Ver costos de envío</p>
+    </div>
+
+    <p class="color">Color: <strong>Negro</strong></p>
+
+    <div class="cantidad">
+      <button (click)="disminuir()">−</button>
+      <span>Cantidad: <strong>{{ cantidad }} unidad</strong></span>
+      <button (click)="aumentar()">+</button>
+      <small>({{ producto.disponibles }} disponibles)</small>
+    </div>
+
+    <button class="btn-comprar" (click)="comprar()">Comprar ahora</button>
+
+    <div class="descripcion">
+      <h3>Descripción</h3>
+      <p>{{ producto.descripcion }}</p>
+    </div>
+  </aside>
+</main>
 
 <ng-template #noEncontrado>
   <div class="no-encontrado">
